@@ -1,4 +1,5 @@
 # jslog
+![Build status](https://travis-ci.org/mentatxx/jslog.svg?branch=master)
 
 Cloud logger for Phonegap/Cordova hybrid applications and web applications
 
