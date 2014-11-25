@@ -24,5 +24,6 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'uglify']);
+  grunt.registerTask('travis', ['jshint']);
 
 };
