@@ -1,0 +1,29 @@
+{
+  "name": "jslog",
+  "version": "1.0.0",
+  "description": "Cloud logger for Phonegap/Cordova hybrid applications and web applications",
+  "main": "lib/jslog.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mentatxx/jslog.git"
+  },
+  "keywords": [
+    "Logger",
+    "Error",
+    "log",
+    "Cordova",
+    "Hybrid",
+    "apps",
+    "console",
+    "cloud"
+  ],
+  "author": "JsLog.me",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/mentatxx/jslog/issues"
+  },
+  "homepage": "https://github.com/mentatxx/jslog"
+}
