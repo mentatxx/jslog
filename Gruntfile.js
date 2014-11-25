@@ -21,9 +21,10 @@ module.exports = function(grunt) {
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-travis-lint');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint', 'uglify']);
-  grunt.registerTask('travis', ['jshint']);
+  grunt.registerTask('default', ['travis-lint', 'jshint', 'uglify']);
+  grunt.registerTask('check', ['travis-lint', 'jshint']);
 
 };
