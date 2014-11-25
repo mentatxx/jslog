@@ -1,6 +1,6 @@
 {
   "name": "jslog",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Cloud logger for Phonegap/Cordova hybrid applications and web applications",
   "main": "lib/jslog.js",
   "scripts": {
@@ -25,5 +25,10 @@
   "bugs": {
     "url": "https://github.com/mentatxx/jslog/issues"
   },
-  "homepage": "https://github.com/mentatxx/jslog"
+  "homepage": "https://github.com/mentatxx/jslog",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-uglify": "~0.6.0",
+    "grunt-contrib-jshint": "~0.10.0"
+  }
 }
