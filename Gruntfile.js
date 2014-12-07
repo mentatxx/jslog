@@ -1,5 +1,7 @@
-module.exports = function(grunt) {
-
+/*jslint white: true*/
+/*global module, grunt*/
+module.exports = function (grunt) {
+  'use strict';
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -9,7 +11,7 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-	sourceMap: true
+	    sourceMap: true
       },
       build: {
         src: 'lib/<%= pkg.name %>.js',
