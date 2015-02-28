@@ -2,31 +2,39 @@
 /*global module, grunt*/
 module.exports = function (grunt) {
   'use strict';
-  // Project configuration.
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    jshint: {
-      all: ['Gruntfile.js', 'lib/**/*.js']
-    },
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-	    sourceMap: true
-      },
-      build: {
-        src: 'lib/<%= pkg.name %>.js',
-        dest: 'dist/<%= pkg.name %>.min.js'
-      }
-    }
+  require('load-grunt-tasks')(grunt,{
+      pattern: ['grunt-*', '!grunt-template-jasmine-requirejs']
   });
 
-  // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-travis-lint');
+  // Project configuration.
+  grunt.initConfig({
+      pkg: grunt.file.readJSON('package.json'),
+      jshint: {
+          all: ['Gruntfile.js', 'lib/*.js', 'test/**/*.js']
+      },
+      uglify: {
+          options: {
+            banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+            sourceMap: true
+          },
+          build: {
+            src: 'lib/<%= pkg.name %>.js',
+            dest: 'dist/<%= pkg.name %>.min.js'
+          }
+      },
+      jasmine: {
+          main: {
+              src: 'test/**/*.js',
+              options: {
+                  helpers: ['lib/jslog.js', 'lib/vendor/lodash.min.js']
+              }
+          }
+      }
+  });
 
   // Default task(s).
   grunt.registerTask('default', ['travis-lint', 'jshint', 'uglify']);
   grunt.registerTask('check', ['travis-lint', 'jshint']);
+  grunt.registerTask('test', ['jshint', 'jasmine:main']);
 
 };
