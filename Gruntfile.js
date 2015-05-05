@@ -26,6 +26,7 @@ module.exports = function (grunt) {
           main: {
               src: 'test/**/*.js',
               options: {
+                  vendor:  ['node_modules/jasmine-ajax/lib/mock-ajax.js'],
                   helpers: ['lib/jslog.js', 'lib/vendor/lodash.min.js']
               }
           }
