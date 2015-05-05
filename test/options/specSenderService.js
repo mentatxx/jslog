@@ -1,3 +1,4 @@
+/*global it, declare, expect*/
 describe('SenderService', function() {
     var logger,
         sampleOptions = {},
@@ -6,9 +7,29 @@ describe('SenderService', function() {
         successCall,
         failedCall,
         ajaxStub = {
-            request1 : {
+            response200 : {
                 url: 'http://jslog.me/log',
-                response: 'OK'
+                response: {
+                    status: 200,
+                    contentType: 'application/json',
+                    responseText: '{"status":"OK"}'
+                }
+            },
+            response400 : {
+                url: 'http://jslog.me/log',
+                response: {
+                    status: 400,
+                    contentType: 'application/json',
+                    responseText: '{"status":"Invalid input"}'
+                }
+            },
+            response500 : {
+                url: 'http://jslog.me/log',
+                response: {
+                    status: 500,
+                    contentType: 'application/json',
+                    responseText: 'Server error'
+                }
             }
         };
 
@@ -17,23 +38,36 @@ describe('SenderService', function() {
         failedCall = jasmine.createSpy('failedCall');
         jasmine.clock().install();
         jasmine.Ajax.install();
-        jasmine.Ajax.installLogger(/*logger.senderService.xmlHttpRequest*/);
+        //jasmine.Ajax.installLogger(/*logger.senderService.xmlHttpRequest*/);
         logger = new JsLog(sampleOptions);
     });
 
     afterEach(function(){
-        jasmine.Ajax.uninstallLogger();
+        //jasmine.Ajax.uninstallLogger();
         jasmine.Ajax.uninstall();
         jasmine.clock().uninstall();
         logger = null;
     });
 
-    it('sends xml http request', function(){
-        jasmine.Ajax.stubRequest(ajaxStub.request1.url).andReturn(ajaxStub.request1.response);
+    it('handles 200 response', function(){
+        jasmine.Ajax.stubRequest(ajaxStub.response200.url).andReturn(ajaxStub.response200.response);
         logger.senderService.sendXmlHttpRequest(protocol, postData, successCall, failedCall);
-        jasmine.clock().tick(60000);
         expect(successCall).toHaveBeenCalled();
         expect(failedCall).not.toHaveBeenCalled();
+    });
+
+    it('handles 400 response', function(){
+        jasmine.Ajax.stubRequest(ajaxStub.response400.url).andReturn(ajaxStub.response400.response);
+        logger.senderService.sendXmlHttpRequest(protocol, postData, successCall, failedCall);
+        expect(successCall).toHaveBeenCalled();
+        expect(failedCall).not.toHaveBeenCalled();
+    });
+
+    it('handles 500 response', function(){
+        jasmine.Ajax.stubRequest(ajaxStub.response500.url).andReturn(ajaxStub.response500.response);
+        logger.senderService.sendXmlHttpRequest(protocol, postData, successCall, failedCall);
+        expect(successCall).not.toHaveBeenCalled();
+        expect(failedCall).toHaveBeenCalled();
     });
 
 });

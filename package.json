@@ -43,7 +43,8 @@
     "load-grunt-tasks": "^3.1.0",
     "lodash": "^3.3.1",
     "requirejs": "^2.1.16",
-    "travis-lint": "0.0.5"
+    "travis-lint": "0.0.5",
+    "karma-coverage": "~0.3.1"
   },
   "dependencies": {}
 }
