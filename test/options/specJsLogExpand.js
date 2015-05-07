@@ -1,4 +1,4 @@
-describe('JsLog', function () {
+describe('expands JSON', function () {
     var logger,
         sampleOptions = {};
 
@@ -10,7 +10,7 @@ describe('JsLog', function () {
         logger = null;
     });
 
-    it('expands JSON', function () {
+    it('with ordering', function () {
         var sourceJson = {"b": 1, "a": 2, "c": [1, 2]},
             expandedJson = logger.expand(sourceJson),
             stringifiedJson = JSON.stringify(expandedJson),
@@ -18,7 +18,7 @@ describe('JsLog', function () {
         expect(stringifiedJson).toEqual(expectedResult);
     });
 
-    it('expands JSON with circular references', function () {
+    it('with circular references', function () {
         var sourceJson = {"b": 1, "a": 2};
         sourceJson.c = sourceJson;
         var expandedJson = logger.expand(sourceJson),
@@ -26,5 +26,22 @@ describe('JsLog', function () {
             expectedResult = '{"a":2,"b":1,"c":"<circular ref>"}';
         expect(stringifiedJson).toEqual(expectedResult);
     });
+
+    it('with null value', function () {
+        var sourceJson = {"b": 1, "a": 2, "c": null},
+            expandedJson = logger.expand(sourceJson),
+            stringifiedJson = JSON.stringify(expandedJson),
+            expectedResult = '{"a":2,"b":1,"c":null}';
+        expect(stringifiedJson).toEqual(expectedResult);
+    });
+
+    xit('and cuts functions', function () {
+        var sourceJson = {"b": 1, "a": 2, "f": function(){}},
+            expandedJson = logger.expand(sourceJson),
+            stringifiedJson = JSON.stringify(expandedJson),
+            expectedResult = '{"a":2,"b":1}';
+        expect(stringifiedJson).toEqual(expectedResult);
+    });
+
 
 });
