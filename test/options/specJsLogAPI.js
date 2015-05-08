@@ -1,3 +1,4 @@
+/*global it, declare, expect*/
 describe('have valid API', function () {
     var /**JsLog*/logger,
         sampleOptions = {
@@ -39,6 +40,26 @@ describe('have valid API', function () {
         expect(spy.calls.mostRecent().args[2]).toEqual(sampleData);
     });
 
+    it('sending info matches protocol', function () {
+        var spy = logger.sendToServer = jasmine.createSpy('sendToServer');
+        logger.info(sampleData);
+        expect(spy).toHaveBeenCalled();
+        expect(spy.calls.count()).toEqual(1);
+        expect(spy.calls.mostRecent().args[0]).toEqual(sampleOptions.key);
+        expect(spy.calls.mostRecent().args[1]).toEqual('info');
+        expect(spy.calls.mostRecent().args[2]).toEqual(sampleData);
+    });
+
+    it('sending warn matches protocol', function () {
+        var spy = logger.sendToServer = jasmine.createSpy('sendToServer');
+        logger.warn(sampleData);
+        expect(spy).toHaveBeenCalled();
+        expect(spy.calls.count()).toEqual(1);
+        expect(spy.calls.mostRecent().args[0]).toEqual(sampleOptions.key);
+        expect(spy.calls.mostRecent().args[1]).toEqual('warn');
+        expect(spy.calls.mostRecent().args[2]).toEqual(sampleData);
+    });
+
     it('sending error matches protocol', function () {
         var spy = logger.sendToServer = jasmine.createSpy('sendToServer'),
             extractedException = logger.exceptionToObject(sampleError);
@@ -47,6 +68,19 @@ describe('have valid API', function () {
         expect(spy.calls.count()).toEqual(1);
         expect(spy.calls.mostRecent().args[0]).toEqual(sampleOptions.key);
         expect(spy.calls.mostRecent().args[1]).toEqual('error');
+        var arg2 = spy.calls.mostRecent().args[2],
+            objectsAreEqual = _.isEqual(arg2, extractedException);
+        expect(objectsAreEqual).toBeTruthy();
+    });
+
+    it('sending exception matches protocol', function () {
+        var spy = logger.sendToServer = jasmine.createSpy('sendToServer'),
+            extractedException = logger.exceptionToObject(sampleError);
+        logger.exception(sampleError);
+        expect(spy).toHaveBeenCalled();
+        expect(spy.calls.count()).toEqual(1);
+        expect(spy.calls.mostRecent().args[0]).toEqual(sampleOptions.key);
+        expect(spy.calls.mostRecent().args[1]).toEqual('exception');
         var arg2 = spy.calls.mostRecent().args[2],
             objectsAreEqual = _.isEqual(arg2, extractedException);
         expect(objectsAreEqual).toBeTruthy();

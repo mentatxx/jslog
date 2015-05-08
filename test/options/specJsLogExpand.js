@@ -1,3 +1,4 @@
+/*global it, declare, expect*/
 describe('expands JSON', function () {
     var logger,
         sampleOptions = {};
