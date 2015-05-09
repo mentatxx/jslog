@@ -86,4 +86,11 @@ describe('have valid API', function () {
         expect(objectsAreEqual).toBeTruthy();
     });
 
+    it('can renew session', function(){
+        var oldSessionId = logger.options.sessionId;
+        logger.renewSession();
+        expect(logger.options.sessionId).not.toEqual(oldSessionId);
+        expect(logger.systemInfoSent).toBeFalsy();
+    });
+
 });
