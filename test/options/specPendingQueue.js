@@ -1,11 +1,6 @@
 /*global it, declare, expect*/
 describe('pending queue', function () {
-    var /**JsLog*/logger,
-        sampleOptions = {
-            "key": "MY_KEY",
-            "hookConsole": false
-        },
-        sampleData = [{
+    var sampleData = [{
             "b": 1,
             "a": 2
         }],
@@ -13,7 +8,6 @@ describe('pending queue', function () {
             "b": (new Array(1000)).join('a'),
             "a": 2
         }],
-        sampleError = new Error('Some error text'),
         /**PendingQueue*/pendingQueue;
 
     beforeEach(function () {
