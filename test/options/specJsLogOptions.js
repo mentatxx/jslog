@@ -3,25 +3,25 @@ describe('JsLogOptions', function(){
         var /** @type JsLog */ logger,
             sample = {
                 // Main settings
-                "enabled": false,
-                "key": false,
-                "version": "SPECIFIC_KEY",
+                "enabled": true,
+                "key": "SPECIFIC_KEY",
+                "version": "SPECIFIC_VERSION",
                 "sessionId": "SPECIFIC_SESSION",
                 // Old-style settings, deprecated
-                "hookConsole": true,
+                "hookConsole": false,
                 "collectSystemInfo": false,
                 "trackLaunches": false,
                 // New-style settings
                 "logUncaughtExceptions": false,
                 "console": {
-                    "enabled": true,
+                    "enabled": false,
                     "display": true,
                     "watch": ['log', 'info', 'warn', 'error']
                 },
                 "network": {
                     "enabled": true,
-                    "codes": [],
-                    "codesExclude": [200, 304, 404],
+                    "codes": [200, 304, 404],
+                    "codesExclude": [],
                     "logRequest": true,
                     "logResponse": true
                 },
@@ -40,29 +40,12 @@ describe('JsLogOptions', function(){
             logger.finalize();
         });
 
-        it('should accept all specified options', function(){
-            var allFilled = true;
-            _.each(sample, function(val, key){
-                var fieldOk = sample[key] === logger.options[key];
-                allFilled = allFilled && fieldOk;
-                if (!fieldOk) {
-                    console.log('Failed for field ', key);
-                }
-            });
-            expect(allFilled).toEqual(true);
+        it('assigns value', function(){
+            var options = new JsLog.JsLogOptions();
+            options.assign(sample);
+            expect(_.isEqual(JSON.stringify(options), JSON.stringify(sample))).toBeTruthy();
         });
 
-        it('should not any other options', function(){
-            var allFilled = true;
-            _.each(logger.options, function(val, key){
-                var haveField = sample.hasOwnProperty(key);
-                allFilled = allFilled && haveField;
-                if (!haveField) {
-                    console.log('Failed for field ', key);
-                }
-            });
-            expect(allFilled).toEqual(true);
-        });
 
     });
 
