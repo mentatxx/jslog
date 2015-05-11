@@ -2,15 +2,34 @@ describe('JsLogOptions', function(){
 
         var /** @type JsLog */ logger,
             sample = {
+                // Main settings
                 "enabled": false,
-                "logUncaughtExceptions": false,
-                "hookConsole": false,
-                "trackHost": false,
-                "collectSystemInfo": false,
-                "trackLaunches": false,
                 "key": false,
                 "version": "SPECIFIC_KEY",
-                "sessionId": "SPECIFIC_SESSION"
+                "sessionId": "SPECIFIC_SESSION",
+                // Old-style settings, deprecated
+                "hookConsole": false,
+                "collectSystemInfo": false,
+                "trackLaunches": false,
+                // New-style settings
+                "logUncaughtExceptions": false,
+                "console": {
+                    "enabled": true,
+                    "display": true,
+                    "watch": ['log', 'info', 'warn', 'error']
+                },
+                "network": {
+                    "enabled": true,
+                    "codes": [],
+                    "codesExclude": [200, 304, 404],
+                    "logRequest": true,
+                    "logResponse": true
+                },
+                "userInteraction": {
+                    "enabled": false,
+                    "events": ['click', 'dblclick', 'change', 'tap', 'drag', 'drop'],
+                    "navigation": true
+                }
             };
 
         beforeEach(function(){
