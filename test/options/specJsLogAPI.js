@@ -27,7 +27,7 @@ describe('have valid API', function () {
     });
 
     afterEach(function () {
-        logger = null;
+        logger.finalize();
         jasmine.Ajax.uninstall();
         availableConsoleHookOptions.forEach(function(item){
             window.console[item] = savedConsole[item];

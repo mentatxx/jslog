@@ -8,7 +8,7 @@ describe('expands JSON', function () {
     });
 
     afterEach(function () {
-        logger = null;
+        logger.finalize();
     });
 
     it('with ordering', function () {

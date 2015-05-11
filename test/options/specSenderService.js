@@ -43,10 +43,10 @@ describe('SenderService', function() {
     });
 
     afterEach(function(){
+        logger.finalize();
         //jasmine.Ajax.uninstallLogger();
         jasmine.Ajax.uninstall();
         jasmine.clock().uninstall();
-        logger = null;
     });
 
     it('handles 200 response', function(){

@@ -8,7 +8,7 @@ describe('JsLogOptions', function(){
                 "version": "SPECIFIC_KEY",
                 "sessionId": "SPECIFIC_SESSION",
                 // Old-style settings, deprecated
-                "hookConsole": false,
+                "hookConsole": true,
                 "collectSystemInfo": false,
                 "trackLaunches": false,
                 // New-style settings
@@ -37,7 +37,7 @@ describe('JsLogOptions', function(){
         });
 
         afterEach(function(){
-            logger = null;
+            logger.finalize();
         });
 
         it('should accept all specified options', function(){
