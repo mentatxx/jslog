@@ -37,6 +37,7 @@ describe('JsLogOptions', function(){
         });
 
         afterEach(function(){
+            logger.pendingSenderService.queue.clearWithPostponedData();
             logger.finalize();
         });
 

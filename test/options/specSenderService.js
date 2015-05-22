@@ -43,6 +43,7 @@ describe('SenderService', function() {
     });
 
     afterEach(function(){
+        logger.pendingSenderService.queue.clearWithPostponedData();
         logger.finalize();
         //jasmine.Ajax.uninstallLogger();
         jasmine.Ajax.uninstall();

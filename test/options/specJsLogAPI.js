@@ -27,6 +27,7 @@ describe('have valid API', function () {
     });
 
     afterEach(function () {
+        logger.pendingSenderService.queue.clearWithPostponedData();
         logger.finalize();
         jasmine.Ajax.uninstall();
         availableConsoleHookOptions.forEach(function(item){

@@ -8,6 +8,7 @@ describe('expands JSON', function () {
     });
 
     afterEach(function () {
+        logger.pendingSenderService.queue.clearWithPostponedData();
         logger.finalize();
     });
 

@@ -1,5 +1,5 @@
 /*global it, declare, expect*/
-describe('have valid API', function () {
+describe('hooks network', function () {
     var /**JsLog*/logger,
         sampleOptions = {
             "key": "MY_KEY",
@@ -38,12 +38,15 @@ describe('have valid API', function () {
 
     beforeEach(function () {
         jasmine.Ajax.install();
+        jasmine.clock().install();
         logger = new JsLog(sampleOptions);
         logger.network = jasmine.createSpy('network');
     });
 
     afterEach(function () {
+        logger.pendingSenderService.queue.clearWithPostponedData();
         logger.finalize();
+        jasmine.clock().uninstall();
         jasmine.Ajax.uninstall();
     });
 
@@ -54,5 +57,24 @@ describe('have valid API', function () {
         xhr.send();
         expect(logger.network).toHaveBeenCalled();
     });
+
+    it('handling timeouts', function(){
+        var xhr = new window.XMLHttpRequest();
+        xhr.open('GET', ajaxStub.response200.url);
+        xhr.send();
+        expect(logger.network).not.toHaveBeenCalled();
+        xhr.responseTimeout();
+        expect(logger.network).toHaveBeenCalled();
+    });
+
+    it('handling errors', function(){
+        var xhr = new window.XMLHttpRequest();
+        xhr.open('GET', ajaxStub.response200.url);
+        xhr.send();
+        expect(logger.network).not.toHaveBeenCalled();
+        xhr.responseError();
+        expect(logger.network).toHaveBeenCalled();
+    });
+
 
 });
