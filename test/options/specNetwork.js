@@ -10,7 +10,7 @@ describe('hooks network', function () {
             }
         },
         ajaxStub = {
-            response200 : {
+            response200: {
                 url: 'http://example.com/',
                 response: {
                     status: 200,
@@ -18,7 +18,7 @@ describe('hooks network', function () {
                     responseText: '{"status":"OK"}'
                 }
             },
-            response400 : {
+            response400: {
                 url: 'http://example.com/',
                 response: {
                     status: 400,
@@ -26,7 +26,7 @@ describe('hooks network', function () {
                     responseText: '{"status":"Invalid input"}'
                 }
             },
-            response500 : {
+            response500: {
                 url: 'http://example.com/',
                 response: {
                     status: 500,
@@ -58,7 +58,7 @@ describe('hooks network', function () {
         expect(logger.network).toHaveBeenCalled();
     });
 
-    it('handling timeouts', function(){
+    it('handling timeouts', function () {
         var xhr = new window.XMLHttpRequest();
         xhr.open('GET', ajaxStub.response200.url);
         xhr.send();
@@ -67,7 +67,7 @@ describe('hooks network', function () {
         expect(logger.network).toHaveBeenCalled();
     });
 
-    it('handling errors', function(){
+    it('handling errors', function () {
         var xhr = new window.XMLHttpRequest();
         xhr.open('GET', ajaxStub.response200.url);
         xhr.send();

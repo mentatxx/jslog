@@ -38,7 +38,10 @@ describe('expands JSON', function () {
     });
 
     xit('and cuts functions', function () {
-        var sourceJson = {"b": 1, "a": 2, "f": function(){}},
+        var sourceJson = {
+                "b": 1, "a": 2, "f": function () {
+                }
+            },
             expandedJson = logger.expand(sourceJson),
             stringifiedJson = JSON.stringify(expandedJson),
             expectedResult = '{"a":2,"b":1}';

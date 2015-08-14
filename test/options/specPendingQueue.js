@@ -31,16 +31,18 @@ describe('pending queue', function () {
         expect(pendingQueue.lastItem).toBeUndefined();
     });
 
-    it('adds data', function(){
+    it('adds data', function () {
         var sampleText = JSON.stringify(sampleData);
         pendingQueue.clear();
         expect(pendingQueue.haveItems()).toBeFalsy();
         pendingQueue.add(sampleText);
         expect(pendingQueue.haveItems()).toBeTruthy();
-        expect(function(){pendingQueue.add('aaaaaaa');}).toThrow();
+        expect(function () {
+            pendingQueue.add('aaaaaaa');
+        }).toThrow();
     });
 
-    it('combine records', function(){
+    it('combine records', function () {
         var sampleText = JSON.stringify(sampleData);
         pendingQueue.clear();
         expect(pendingQueue.haveItems()).toBeFalsy();
@@ -56,7 +58,7 @@ describe('pending queue', function () {
         expect(fetchedValue.value).toBeDefined();
     });
 
-    it('load / saves records', function(){
+    it('load / saves records', function () {
         var sampleText = JSON.stringify(longSampleData),
             MESSAGE_COUNT = 1000,
             result = [],
@@ -64,7 +66,7 @@ describe('pending queue', function () {
         // Clear & Fill
         pendingQueue.clear();
         expect(pendingQueue.haveItems()).toBeFalsy();
-        for (var i=0; i<MESSAGE_COUNT; i++) {
+        for (var i = 0; i < MESSAGE_COUNT; i++) {
             pendingQueue.add(sampleText);
         }
         // Load from storage
@@ -73,7 +75,7 @@ describe('pending queue', function () {
         pendingQueue.loadPostponedData();
         //
         expect(pendingQueue.haveItems()).toBeGreaterThan(1);
-        while (item = pendingQueue.fetchItem()) {
+        while ((item = pendingQueue.fetchItem())) {
             var value = JSON.parse(item.value);
             result = result.concat(value);
             pendingQueue.deleteItem(item.key);
@@ -82,12 +84,12 @@ describe('pending queue', function () {
         expect(pendingQueue.haveItems()).toBeFalsy();
     });
 
-    it('ignores messages over limit', function(){
+    it('ignores messages over limit', function () {
         var sampleText = JSON.stringify(longSampleData),
             OVERSIZE_COUNT = 2000;
         //
         pendingQueue.clear();
-        for (var i=0; i<OVERSIZE_COUNT; i++) {
+        for (var i = 0; i < OVERSIZE_COUNT; i++) {
             pendingQueue.add(sampleText);
         }
         expect(pendingQueue.counter).toBeLessThan(OVERSIZE_COUNT);

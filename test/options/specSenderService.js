@@ -1,5 +1,5 @@
 /*global it, declare, expect*/
-describe('SenderService', function() {
+describe('SenderService', function () {
     var logger,
         sampleOptions = {},
         protocol = 'http:',
@@ -7,7 +7,7 @@ describe('SenderService', function() {
         successCall,
         failedCall,
         ajaxStub = {
-            response200 : {
+            response200: {
                 url: 'http://jslog.me/log',
                 response: {
                     status: 200,
@@ -15,7 +15,7 @@ describe('SenderService', function() {
                     responseText: '{"status":"OK"}'
                 }
             },
-            response400 : {
+            response400: {
                 url: 'http://jslog.me/log',
                 response: {
                     status: 400,
@@ -23,7 +23,7 @@ describe('SenderService', function() {
                     responseText: '{"status":"Invalid input"}'
                 }
             },
-            response500 : {
+            response500: {
                 url: 'http://jslog.me/log',
                 response: {
                     status: 500,
@@ -33,7 +33,7 @@ describe('SenderService', function() {
             }
         };
 
-    beforeEach(function(){
+    beforeEach(function () {
         successCall = jasmine.createSpy('successCall');
         failedCall = jasmine.createSpy('failedCall');
         jasmine.clock().install();
@@ -42,7 +42,7 @@ describe('SenderService', function() {
         logger = new JsLog(sampleOptions);
     });
 
-    afterEach(function(){
+    afterEach(function () {
         logger.pendingSenderService.queue.clearWithPostponedData();
         logger.finalize();
         //jasmine.Ajax.uninstallLogger();
@@ -50,21 +50,21 @@ describe('SenderService', function() {
         jasmine.clock().uninstall();
     });
 
-    it('handles 200 response', function(){
+    it('handles 200 response', function () {
         jasmine.Ajax.stubRequest(ajaxStub.response200.url).andReturn(ajaxStub.response200.response);
         logger.senderService.sendXmlHttpRequest(protocol, postData, successCall, failedCall);
         expect(successCall).toHaveBeenCalled();
         expect(failedCall).not.toHaveBeenCalled();
     });
 
-    it('handles 400 response', function(){
+    it('handles 400 response', function () {
         jasmine.Ajax.stubRequest(ajaxStub.response400.url).andReturn(ajaxStub.response400.response);
         logger.senderService.sendXmlHttpRequest(protocol, postData, successCall, failedCall);
         expect(successCall).toHaveBeenCalled();
         expect(failedCall).not.toHaveBeenCalled();
     });
 
-    it('handles 500 response', function(){
+    it('handles 500 response', function () {
         jasmine.Ajax.stubRequest(ajaxStub.response500.url).andReturn(ajaxStub.response500.response);
         logger.senderService.sendXmlHttpRequest(protocol, postData, successCall, failedCall);
         expect(successCall).not.toHaveBeenCalled();

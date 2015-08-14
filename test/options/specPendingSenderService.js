@@ -17,7 +17,7 @@ describe('pending queue', function () {
             inOperation: false,
             strategy: 0,
             operationTime: 1000,
-            sendPacket: function(protocol, postData, forceSend, successHandler, failHandler) {
+            sendPacket: function (protocol, postData, forceSend, successHandler, failHandler) {
                 var that = this;
                 if (this.inOperation && !forceSend) {
                     failHandler();
@@ -25,13 +25,13 @@ describe('pending queue', function () {
                 }
                 this.inOperation = true;
                 if (this.strategy === 0) {
-                    setTimeout(function(){
+                    setTimeout(function () {
                         that.inOperation = false;
                         successHandler();
                     }, this.operationTime);
                 }
                 if (this.strategy === 1) {
-                    setTimeout(function(){
+                    setTimeout(function () {
                         that.inOperation = false;
                         failHandler();
                     }, this.operationTime);
@@ -49,18 +49,18 @@ describe('pending queue', function () {
         jasmine.Ajax.uninstall();
     });
 
-    it('can start and stop sending postponed messages', function(){
+    it('can start and stop sending postponed messages', function () {
         pendingSenderService.sendPendingItem = jasmine.createSpy('sendPendingItem');
         expect(pendingSenderService.sendPendingItem).not.toHaveBeenCalled();
         pendingSenderService.start();
         jasmine.clock().tick(JsLog.PendingSenderService.SEND_POSTPONE_INTERVAL);
         expect(pendingSenderService.sendPendingItem.calls.count()).toEqual(1);
         pendingSenderService.stop();
-        jasmine.clock().tick(2*JsLog.PendingSenderService.SEND_POSTPONE_INTERVAL);
+        jasmine.clock().tick(2 * JsLog.PendingSenderService.SEND_POSTPONE_INTERVAL);
         expect(pendingSenderService.sendPendingItem.calls.count()).toEqual(1);
     });
 
-    it('do not double start', function(){
+    it('do not double start', function () {
         pendingSenderService.sendPendingItem = jasmine.createSpy('sendPendingItem');
         expect(pendingSenderService.sendPendingItem).not.toHaveBeenCalled();
         pendingSenderService.start();
@@ -70,7 +70,7 @@ describe('pending queue', function () {
         pendingSenderService.stop();
     });
 
-    it('sends data from queue', function(){
+    it('sends data from queue', function () {
         pendingQueue.add(longSampleText);
         pendingQueue.add(longSampleText);
         pendingQueue.add(longSampleText);

@@ -19,9 +19,10 @@ describe('have valid API', function () {
 
     beforeEach(function () {
         jasmine.Ajax.install();
-        availableConsoleHookOptions.forEach(function(item){
+        availableConsoleHookOptions.forEach(function (item) {
             savedConsole[item] = window.console[item];
-            window.console[item] = function(){};
+            window.console[item] = function () {
+            };
         });
         logger = new JsLog(sampleOptions);
     });
@@ -30,7 +31,7 @@ describe('have valid API', function () {
         logger.pendingSenderService.queue.clearWithPostponedData();
         logger.finalize();
         jasmine.Ajax.uninstall();
-        availableConsoleHookOptions.forEach(function(item){
+        availableConsoleHookOptions.forEach(function (item) {
             window.console[item] = savedConsole[item];
         });
     });
@@ -56,6 +57,7 @@ describe('have valid API', function () {
             objectsAreEqual = _.isEqual(arg2, expectedData);
         expect(objectsAreEqual).toBeTruthy();
     }
+
     it('sending log matches protocol', function () {
         testSendingProtocol('log', sampleData, orderedData);
         testSendingProtocol('info', sampleData, orderedData);
@@ -64,7 +66,7 @@ describe('have valid API', function () {
         testSendingProtocol('exception', sampleError, logger.exceptionToObject(sampleError));
     });
 
-    it('can renew session', function(){
+    it('can renew session', function () {
         var oldSessionId = logger.options.sessionId;
         logger.renewSession();
         expect(logger.options.sessionId).not.toEqual(oldSessionId);
