@@ -82,6 +82,7 @@ describe('have valid API', function () {
         expect(spy.calls.mostRecent().args[1]).toEqual('log');
         var arg2 = spy.calls.mostRecent().args[2],
             objectsAreEqual = _.isEqual(arg2, [orderedData, orderedData]);
+        //expect(spy.calls.mostRecent()).toEqual([orderedData, orderedData]);
         expect(objectsAreEqual).toBeTruthy();
     });
 
